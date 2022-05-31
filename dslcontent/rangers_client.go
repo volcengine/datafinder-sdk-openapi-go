@@ -1,8 +1,13 @@
 package dslcontent
 
 import (
+	"bytes"
 	"errors"
+	"io"
+	"mime/multipart"
 	"net/http"
+	"os"
+	"path/filepath"
 	"strings"
 
 	"gosdk/consts"
@@ -75,66 +80,77 @@ func handleParams(request *http.Request, headers map[string]string, params map[s
 }
 
 func (rangersClient *RangersClient) request(service string, method string, path string, headers map[string]string, params map[string]string, body string) (http.Response, error) {
-	method = strings.ToUpper(method)
-	if !rangersClient.methodValid(method) {
-		return http.Response{}, errors.New(consts.METHOD_NOT_SUPPORT)
-	}
-	if method == consts.POST && body == "" {
-		return http.Response{}, errors.New(consts.POST_BODY_NULL)
-	}
-
 	servicePath := rangersClient.getServicePath(service)
 
 	if servicePath == "" {
 		return http.Response{}, errors.New(consts.SERVICE_NOT_SUPPORT)
 	}
+
 	serviceUrl := servicePath + path
+
+	return rangersClient.doRequest(method, serviceUrl, headers, params, body)
+
+}
+
+func (rangersClient *RangersClient) doRequest(method string, serviceUrl string, headers map[string]string, params map[string]string, body string) (http.Response, error) {
+	if len(method) < 1 {
+		method = "get"
+	}
+	method = strings.ToUpper(method)
+	if !rangersClient.methodValid(method) {
+		return http.Response{}, errors.New(consts.METHOD_NOT_SUPPORT)
+	}
 	authorization := util.Sign(rangersClient.Ak, rangersClient.Sk, rangersClient.Expiration, method, serviceUrl, params, body)
 	if headers == nil {
 		headers = map[string]string{}
 	}
 	headers[consts.AUTHORIZATION] = authorization
-	if consts.POST == method {
+	if _, ok := headers[consts.CONTENT_TYPE]; !ok {
 		headers[consts.CONTENT_TYPE] = consts.APPLICATION_JSON
 	}
 	url := strings.TrimSpace(rangersClient.Url + serviceUrl)
 	client := &http.Client{}
-	if method == consts.PUT {
-		request, err := http.NewRequest(http.MethodPut, url, strings.NewReader(body))
-		if err != nil {
-			return http.Response{}, err
-		}
-		handleParams(request, headers, params)
-		response, err := client.Do(request)
-		if err != nil {
-			return http.Response{}, err
-		}
-		return *response, nil
-
-	} else if method == consts.POST {
-		request, err := http.NewRequest(http.MethodPost, url, strings.NewReader(body))
-		if err != nil {
-			return http.Response{}, err
-		}
-		handleParams(request, headers, params)
-		response, err := client.Do(request)
-		if err != nil {
-			return http.Response{}, err
-		}
-		return *response, nil
-	} else {
-		request, err := http.NewRequest(http.MethodGet, url, nil)
-		if err != nil {
-			return http.Response{}, err
-		}
-		handleParams(request, headers, params)
-		response, err := client.Do(request)
-		if err != nil {
-			return http.Response{}, err
-		}
-		return *response, nil
+	request, err := http.NewRequest(method, url, strings.NewReader(body))
+	if err != nil {
+		return http.Response{}, err
 	}
+	handleParams(request, headers, params)
+	response, err := client.Do(request)
+	if err != nil {
+		return http.Response{}, err
+	}
+	return *response, nil
+}
 
+func (rangersClient *RangersClient) UploadFile(method string, serviceUrl string, headers map[string]string, params map[string]string, filePath string) (http.Response, error) {
+	file, _ := os.Open(filePath)
+	body := &bytes.Buffer{}
+	writer := multipart.NewWriter(body)
+	part, _ := writer.CreateFormFile("file", filepath.Base(file.Name()))
+	io.Copy(part, file)
+	writer.Close()
+
+	authorization := util.Sign(rangersClient.Ak, rangersClient.Sk, rangersClient.Expiration, method, serviceUrl, params, body.String())
+	if headers == nil {
+		headers = map[string]string{}
+	}
+	headers[consts.AUTHORIZATION] = authorization
+	if _, ok := headers[consts.CONTENT_TYPE]; !ok {
+		headers[consts.CONTENT_TYPE] = consts.APPLICATION_JSON
+	}
+	url := strings.TrimSpace(rangersClient.Url + serviceUrl)
+	client := &http.Client{}
+	request, err := http.NewRequest(method, url, body)
+	if err != nil {
+		return http.Response{}, err
+	}
+	handleParams(request, headers, params)
+	request.Header.Add("Content-Type", writer.FormDataContentType())
+	response, err := client.Do(request)
+	if err != nil {
+		return http.Response{}, err
+	}
+	return *response, nil
 }
 
 func formatParams(params map[string]string) string {
@@ -247,4 +263,8 @@ func (rangersClient *RangersClient) DataProfile(path string, method string) (htt
 
 func (rangersClient *RangersClient) DataProfileGet(path string) (http.Response, error) {
 	return rangersClient.DataProfileFull(path, consts.GET, nil, nil, "")
+}
+
+func (rangersClient *RangersClient) Request(method string, serviceUrl string, headers map[string]string, params map[string]string, body string) (http.Response, error) {
+	return rangersClient.doRequest(method, serviceUrl, headers, params, body)
 }

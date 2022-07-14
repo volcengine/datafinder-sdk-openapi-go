@@ -1,6 +1,6 @@
 package dslcontent
 
-import "gosdk/consts"
+import "github.com/volcengine/datafinder-sdk-openapi-go/consts"
 
 type FilterBuilder struct {
 	profileFilter Filter

@@ -10,8 +10,8 @@ import (
 	"path/filepath"
 	"strings"
 
-	"gosdk/consts"
-	"gosdk/util"
+	"github.com/volcengine/datafinder-sdk-openapi-go/consts"
+	"github.com/volcengine/datafinder-sdk-openapi-go/util"
 )
 
 var (

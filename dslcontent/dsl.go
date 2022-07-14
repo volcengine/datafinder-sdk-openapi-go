@@ -1,7 +1,7 @@
 package dslcontent
 
 import (
-	"gosdk/consts"
+	"github.com/volcengine/datafinder-sdk-openapi-go/consts"
 	"reflect"
 )
 

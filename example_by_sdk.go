@@ -6,7 +6,7 @@ import (
 	"io/ioutil"
 	"strconv"
 
-	"gosdk/dslcontent"
+	"github.com/volcengine/datafinder-sdk-openapi-go/dslcontent"
 )
 
 var (

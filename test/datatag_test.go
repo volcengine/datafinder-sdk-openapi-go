@@ -7,7 +7,7 @@ import (
 	"path"
 	"testing"
 
-	"gosdk/dslcontent"
+	"github.com/volcengine/datafinder-sdk-openapi-go/dslcontent"
 )
 
 var (

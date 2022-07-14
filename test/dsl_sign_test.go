@@ -1,7 +1,7 @@
 package test
 
 import (
-	"gosdk/util"
+	"github.com/volcengine/datafinder-sdk-openapi-go/util"
 	"strconv"
 	"testing"
 

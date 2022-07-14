@@ -1,6 +1,6 @@
 package dslcontent
 
-import "github.com/volcengine/datafinder-sdk-openapi-go"
+import "github.com/volcengine/datafinder-sdk-openapi-go/consts"
 
 type Filter struct {
 	ShowName   string                 `json:"show_name,omitempty"`

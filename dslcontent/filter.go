@@ -1,6 +1,6 @@
 package dslcontent
 
-import "gosdk/consts"
+import "v/consts"
 
 type Filter struct {
 	ShowName   string                 `json:"show_name,omitempty"`

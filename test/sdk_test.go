@@ -7,7 +7,7 @@ import (
 
 	"github.com/stretchr/testify/suite"
 
-	"gosdk/dslcontent"
+	"github.com/volcengine/datafinder-sdk-openapi-go/dslcontent"
 )
 
 //单元测试版本

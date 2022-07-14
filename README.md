@@ -3,7 +3,7 @@
 ### 1. 导入
 
 ```go
-import "gosdk/dslcontent"
+import "github.com/volcengine/datafinder-sdk-openapi-go/dslcontent"
 ```
 
 ### 2. dsl样例以及说明
@@ -16,7 +16,7 @@ import "gosdk/dslcontent"
             							EventWithoutEventId("origin", "predefin
 
 ```go
-import "gosdk/dslcontent"
+import "github.com/volcengine/datafinder-sdk-openapi-go/dslcontent"
 
 //方法返回事件查询的示例DSL
 func GetEventDSL() dslcontent.DSL {
@@ -62,7 +62,7 @@ func GetEventDSL() dslcontent.DSL {
 #### b. 转换查询
 
 ```go
-import "gosdk/dslcontent"
+import "github.com/volcengine/datafinder-sdk-openapi-go/dslcontent"
 
 //方法返回的是转换查询的DSL
 func GetFunnelDSL() dslcontent.DSL {
@@ -90,7 +90,7 @@ func GetFunnelDSL() dslcontent.DSL {
 #### c. 生命周期查询
 
 ```go
-import "gosdk/dslcontent"
+import "github.com/volcengine/datafinder-sdk-openapi-go/dslcontent"
 
 //方法返回生命周期查询的示例DSL
 func GetLifeCycleDSL() dslcontent.DSL {
@@ -118,7 +118,7 @@ func GetLifeCycleDSL() dslcontent.DSL {
 #### d. 用户路径查询
 
 ```go
-import "gosdk/dslcontent"
+import "github.com/volcengine/datafinder-sdk-openapi-go/dslcontent"
 
 //方法返回用户路径查询的示例DSL
 func GetPathFinderDSL() dslcontent.DSL {
@@ -153,7 +153,7 @@ func GetPathFinderDSL() dslcontent.DSL {
 #### e. 留存查询
 
 ```go
-import "gosdk/dslcontent"
+import "github.com/volcengine/datafinder-sdk-openapi-go/dslcontent"
 
 //方法返回留存查询的示例DSL
 func GetRetentionDSL() dslcontent.DSL {
@@ -192,7 +192,7 @@ func GetRetentionDSL() dslcontent.DSL {
 #### f. WEB SESSION查询
 
 ```go
-import "gosdk/dslcontent"
+import "github.com/volcengine/datafinder-sdk-openapi-go/dslcontent"
 
 //方法返回web session查询的示例DSL
 func GetWebDSL() dslcontent.DSL {
@@ -231,7 +231,7 @@ func GetWebDSL() dslcontent.DSL {
 #### g. topk查询
 
 ```go
-import "gosdk/dslcontent"
+import "github.com/volcengine/datafinder-sdk-openapi-go/dslcontent"
 
 //方法返回topK查询的示例DSL
 func GetTopKDSL() dslcontent.DSL {
@@ -267,7 +267,7 @@ func GetTopKDSL() dslcontent.DSL {
 ### 1. 导入
 
 ```go
-import "gosdk/dslcontent"
+import "github.com/volcengine/datafinder-sdk-openapi-go/dslcontent"
 ```
 
 ### 2. 使用方式

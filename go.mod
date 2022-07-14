@@ -1,4 +1,4 @@
-module gosdk
+module github.com/volcengine/datafinder-sdk-openapi-go
 
 go 1.14
 

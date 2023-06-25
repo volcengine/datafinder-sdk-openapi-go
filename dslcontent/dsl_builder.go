@@ -8,7 +8,9 @@ type DSLBuilder struct {
 }
 
 func NewDSLBuilder(dsl DSL, queryType string) *DSLBuilder {
-	return &DSLBuilder{dsl, queryType}
+	dslBuilder := &DSLBuilder{dsl, queryType}
+	dslBuilder.QueryType(queryType)
+	return dslBuilder
 }
 
 func (dslBuilder *DSLBuilder) AppID(appId int) *DSLBuilder {

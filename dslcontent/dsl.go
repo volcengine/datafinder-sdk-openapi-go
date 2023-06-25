@@ -77,7 +77,9 @@ func (dsl *DSL) SetOption(option map[string]interface{}) {
 
 func GetDSLBuilder(queryType string) DSLBuilder {
 	dsl := NewDSL()
-	return DSLBuilder{dsl, queryType}
+	dslBuilder := DSLBuilder{dsl, queryType}
+	dslBuilder.QueryType(queryType)
+	return dslBuilder
 }
 
 func EventBuilder() DSLBuilder {

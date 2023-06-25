@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"testing"
 
-	"github.com/agiledragon/gomonkey"
+	"github.com/agiledragon/gomonkey/v2"
 	"github.com/stretchr/testify/suite"
 )
 

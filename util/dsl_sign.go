@@ -4,6 +4,7 @@ import (
 	"crypto/hmac"
 	"crypto/sha256"
 	"encoding/hex"
+	"net/url"
 	"strconv"
 	"time"
 )
@@ -46,7 +47,7 @@ func canonicalParam(params map[string]string) string {
 		return res
 	}
 	for key := range params {
-		res = res + formatKeyValue(key, params[key]) + "&"
+		res = res + formatKeyValue(url.QueryEscape(key), url.QueryEscape(params[key])) + "&"
 	}
 	return res[0 : len(res)-1]
 }
